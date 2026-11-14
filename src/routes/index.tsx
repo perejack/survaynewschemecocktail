@@ -1916,7 +1916,7 @@ function Index() {
                   Log In
                 </Button>
                 <Button className="header-cta" onClick={start}>
-                  Sign Up <ArrowUpRight />
+                  Start Earning <ArrowUpRight />
                 </Button>
               </div>
             )}
@@ -1956,7 +1956,7 @@ function Index() {
                     start();
                   }}
                 >
-                  Sign Up Free <ArrowUpRight className="w-4 h-4 ml-1" />
+                  Start Earning Free <ArrowUpRight className="w-4 h-4 ml-1" />
                 </Button>
                 <Button
                   variant="outline"
@@ -2013,7 +2013,7 @@ function Index() {
               </p>
               <div className="hero-actions">
                 <Button className="hero-primary" onClick={start}>
-                  Get Started Free <ArrowUpRight />
+                  Start Earning <ArrowUpRight />
                 </Button>
                 <Button
                   className="hero-text"
@@ -2320,7 +2320,7 @@ function Index() {
                   Start taking paid surveys and online tasks in four straightforward steps.
                 </p>
                 <Button className="dark-button" onClick={start}>
-                  Explore SurveyPay <ArrowUpRight />
+                  Start Earning Free <ArrowUpRight />
                 </Button>
               </div>
               <div className="how-steps grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -2409,7 +2409,7 @@ function Index() {
           <section className="bottom-cta">
             <div className="container bottom-cta-inner">
               <div>
-                <div className="section-kicker">FREE REGISTRATION · GET STARTED TODAY</div>
+                <div className="section-kicker">FREE REGISTRATION · START EARNING TODAY</div>
                 <h2>Ready to start earning survey rewards in Kenya?</h2>
                 <p>
                   Complete short surveys on everyday Kenyan services, earn rewards to your account, and withdraw directly to M-Pesa. Free to join, flexible schedule, no fees required.
@@ -2420,6 +2420,21 @@ function Index() {
               </Button>
             </div>
           </section>
+
+          {/* Mobile Sticky Floating CTA Bar (Landing Page) */}
+          {!currentUser && (
+            <aside className="landing-mobile-floating-cta md:hidden" aria-label="Start earning">
+              <div className="floating-cta-inner">
+                <div className="floating-cta-text">
+                  <span className="floating-cta-title">Earn up to KSh 1,500/day</span>
+                  <span className="floating-cta-sub">Free to join · M-Pesa rewards</span>
+                </div>
+                <Button className="floating-cta-btn" onClick={start}>
+                  Start Earning <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
+                </Button>
+              </div>
+            </aside>
+          )}
         </main>
       ) : (
         <main className="app-main container">

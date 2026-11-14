@@ -7,7 +7,7 @@ const STORAGE_KEY_USER = 'sp_local_user';
 const STORAGE_KEY_PROFILE = 'sp_local_profile';
 const STORAGE_KEY_USERS_DB = 'sp_registered_users';
 
-function isNetworkError(err: unknown): boolean {
+function isAuthFallbackEligible(err: unknown): boolean {
   if (!err) return false;
   const msg = (err instanceof Error ? err.message : String(err)).toLowerCase();
   return (
@@ -17,8 +17,20 @@ function isNetworkError(err: unknown): boolean {
     msg.includes('name_not_resolved') ||
     msg.includes('load resource') ||
     msg.includes('fetch') ||
-    msg.includes('dns')
+    msg.includes('dns') ||
+    msg.includes('rate limit') ||
+    msg.includes('rate_limit') ||
+    msg.includes('over_email_send_rate_limit') ||
+    msg.includes('429') ||
+    msg.includes('email provider') ||
+    msg.includes('error sending confirmation email') ||
+    msg.includes('confirmation email') ||
+    msg.includes('smtp')
   );
+}
+
+function isNetworkError(err: unknown): boolean {
+  return isAuthFallbackEligible(err);
 }
 
 function getStoredUsers(): Array<{ id: string; email: string; password?: string; phone: string }> {
@@ -191,6 +203,12 @@ export async function signIn(email: string, password: string) {
       if (isNetworkError(error)) {
         return authenticateFallback(email, password);
       }
+      // If user was created under local fallback (e.g. Supabase email rate limit during signup)
+      const localUsers = getStoredUsers();
+      const localUser = localUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
+      if (localUser && (!localUser.password || localUser.password === password)) {
+        return authenticateFallback(email, password);
+      }
       throw error;
     }
     if (data.user) {
@@ -199,6 +217,11 @@ export async function signIn(email: string, password: string) {
     return data;
   } catch (err) {
     if (isNetworkError(err)) {
+      return authenticateFallback(email, password);
+    }
+    const localUsers = getStoredUsers();
+    const localUser = localUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (localUser && (!localUser.password || localUser.password === password)) {
       return authenticateFallback(email, password);
     }
     throw err;

@@ -203,7 +203,7 @@ function AuthPage() {
               {mode === 'signup' ? 'JOIN CONSUMER RESEARCH PANEL' : 'PANEL MEMBER ACCESS'}
             </div>
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-              {mode === 'signup' ? 'Get Started with SurveyPay' : 'Welcome back'}
+              {mode === 'signup' ? 'Start Earning with SurveyPay' : 'Welcome back'}
             </h1>
             <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto">
               {mode === 'signup'
