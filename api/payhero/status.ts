@@ -26,8 +26,6 @@ const PAYHERO_AUTH_HEADER =
   "Basic aEttTWluZFhYbzBDWE9CTzJZd2c6d0VBUWFrd1NxWklWYjAyRFdJaHI1R095eFc4Tlg4Slk1OUk3bmFvMg==";
 
 function getAuthHeader(): string {
-  const envVal = process.env.PAYHERO_AUTH_HEADER?.trim();
-  if (envVal) return envVal.startsWith("Basic ") ? envVal : `Basic ${envVal}`;
   return PAYHERO_AUTH_HEADER;
 }
 

@@ -58,14 +58,10 @@ const PAYHERO_AUTH_HEADER =
 const PAYHERO_CHANNEL_ID = 15193;
 
 function getAuthHeader(): string {
-  const envVal = process.env.PAYHERO_AUTH_HEADER?.trim();
-  if (envVal) return envVal.startsWith("Basic ") ? envVal : `Basic ${envVal}`;
   return PAYHERO_AUTH_HEADER;
 }
 
 function getChannelId(): number {
-  const envVal = Number(process.env.PAYHERO_CHANNEL_ID);
-  if (Number.isFinite(envVal) && envVal > 0) return envVal;
   return PAYHERO_CHANNEL_ID;
 }
 
